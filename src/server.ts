@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended:true}));
 // routes go here
 app.use(routes);
 // db url change database name before running server
-const Mongo_Url = process.env.DB_URL || 'mongodb://127.0.0.1:27017/studentsDB';
+const Mongo_Url = process.env.DB_URL || 'mongodb://127.0.0.1:27017/SocialNetworkDB';
 
 // connecting to database before initializing server
 mongoose
