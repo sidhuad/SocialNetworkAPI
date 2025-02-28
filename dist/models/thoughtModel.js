@@ -5,6 +5,7 @@ const thoughtsSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
+        get: (timestamp) => new Date(timestamp).toLocaleString()
     },
     username: { type: String, required: true },
     reactions: [SReactions],

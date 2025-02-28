@@ -4,8 +4,7 @@ interface IReactions extends Document {
   reactionId: ObjectId;
   reactionBody: string;
   username: string;
-  createdAt: Date;
-  // need a getter method
+  createdAt: Date|string;
 }
 
 const reactionSchema = new Schema<IReactions>(
@@ -16,7 +15,11 @@ const reactionSchema = new Schema<IReactions>(
     },
     reactionBody: { type: String, maxlength: 280, required: true },
     username: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
+    createdAt: { 
+      type: Date, 
+      default: Date.now,
+      get: (timestamp:any) => new Date(timestamp).toLocaleString(),
+    },
   },
   {
     toJSON:{

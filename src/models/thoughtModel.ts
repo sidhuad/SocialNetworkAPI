@@ -3,7 +3,7 @@ import SReactions from "./reactionModel.js";
 
 interface IThoughts extends Document {
   thoughtText: string;
-  createdAt: Date;
+  createdAt: Date|string;
   username: string;
   reactions: typeof SReactions[];
   reactionCount: number;
@@ -15,6 +15,7 @@ const thoughtsSchema = new Schema<IThoughts>(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: (timestamp:any) => new Date(timestamp!).toLocaleString()
     },
     username: { type: String, required: true },
     reactions: [SReactions],
@@ -24,11 +25,12 @@ const thoughtsSchema = new Schema<IThoughts>(
       virtuals: true,
       getters: true,
     },
+
     id: false,
   }
 );
 
-thoughtsSchema.virtual("reactionCount").get(function () {
+thoughtsSchema.virtual("reactionCount").get(function (this:any) {
   return this.reactions.length;
 });
 

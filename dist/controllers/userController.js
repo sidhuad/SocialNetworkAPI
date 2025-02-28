@@ -4,10 +4,16 @@ import Thoughts from "../models/thoughtModel.js";
 export const getUsers = async (_req, res) => {
     try {
         const users = await User.find({});
+        if (users.length === 0) {
+            res.status(404).json({ message: "No User Found !!" });
+            return;
+        }
         res.status(200).json(users);
+        return;
     }
     catch (err) {
         res.status(500).json(err);
+        return;
     }
 };
 // get a single user by id
@@ -34,10 +40,16 @@ export const getSingleUser = async (req, res) => {
 export const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body);
+        if (!user) {
+            res.status(404).json({ message: "No User Created" });
+            return;
+        }
         res.status(200).json(user);
+        return;
     }
     catch (err) {
         res.status(500).json(err);
+        return;
     }
 };
 // update a single user by id
@@ -74,7 +86,7 @@ export const deleteUser = async (req, res) => {
         await Thoughts.deleteMany({ _id: { $in: user.thoughts } });
         // deleting user by id
         await User.findByIdAndDelete(req.params.userId);
-        res.status(200).json(user);
+        res.status(200).json({ message: "User Deleted." });
         return;
     }
     catch (err) {
@@ -123,7 +135,7 @@ export const deleteUserFriend = async (req, res) => {
             res.status(404).json({ message: "user not found" });
             return;
         }
-        res.status(200).json(user);
+        res.status(200).json({ message: "Friend Deleted!" });
         return;
     }
     catch (err) {

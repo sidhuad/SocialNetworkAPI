@@ -1,9 +1,8 @@
 import {Router} from 'express';
 import { getThoughts, createThoughts, getSingleThought, updateThought, deleteThought, createReaction, deleteReaction } from '../../controllers/thoughtController.js';
-
 const router = Router();
 
-//localhost/api/thoughts/
+// localhost/api/thoughts/
 router.route('/').get(getThoughts).post(createThoughts);
 
 // localhost/api/thoughts/:thoughtId

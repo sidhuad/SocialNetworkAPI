@@ -6,7 +6,11 @@ const reactionSchema = new Schema({
     },
     reactionBody: { type: String, maxlength: 280, required: true },
     username: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        get: (timestamp) => new Date(timestamp).toLocaleString(),
+    },
 }, {
     toJSON: {
         getters: true,
